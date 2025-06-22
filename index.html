@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cari Tahu</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      font-family: 'Poppins', 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+    }
+
+    header {
+      background: white;
+      padding: 0.5em 1em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ccc;
+      flex-wrap: wrap;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-container img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    }
+
+    .brand-name {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #333;
+    }
+
+    nav {
+      display: flex;
+      gap: 10px;
+    }
+
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+      padding-bottom: 5px;
+      transition: color 0.3s, border-bottom 0.3s;
+    }
+
+    nav a:hover {
+      color: #34A853;
+      border-bottom: 2px solid #34A853;
+    }
+
+    .btn {
+      background-color: #34A853;
+      color: white;
+      border: none;
+      padding: 0.5em 1em;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .Abdullah {
+      background: #34A853;
+      color: white;
+      padding: 1.5em 1em;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .Abdullah div {
+      max-width: 60%;
+      padding-left: 1.5em;
+      transform: translateY(-20px);
+    }
+
+    .Abdullah h1 {
+      font-weight: 700;
+      font-size: 2.2rem;
+      margin-bottom: 0.5em;
+    }
+
+    .Abdullah p {
+      font-weight: 400;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #f0f0f0;
+    }
+
+    .Abdullah img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      margin-top: 10px;
+    }
+
+    .container {
+      padding: 2em;
+      background: #f4f4f4;
+      text-align: center;
+    }
+
+    .card, .gemini-card {
+      background: white;
+      border-radius: 10px;
+      padding: 2em;
+      max-width: 600px;
+      margin: 2em auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    input[type="text"], input[type="file"] {
+      width: 90%;
+      padding: 0.8em;
+      margin-top: 1em;
+      margin-bottom: 1em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    #output, #outputGemini {
+      margin-top: 1em;
+      background: #e6e6e6;
+      padding: 1em;
+      border-radius: 5px;
+      display: none;
+    }
+
+    footer {
+      background: #34A853;
+      color: white;
+      padding: 2em;
+      text-align: center;
+    }
+
+    footer a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .Abdullah {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+      }
+
+      .Abdullah div {
+        max-width: 100%;
+        margin-bottom: 20px;
+        transform: translateY(0);
+        padding-left: 0;
+      }
+
+      .Abdullah img {
+        margin-top: 20px;
+      }
+    }
+  </style>
+
+  
+</head>
+<body>
+
+<header>
+  <div class="logo-container">
+    <img src="Logo.jpeg" alt="Logo Cari Tahu" />
+    <span class="brand-name">Cari Tahu</span>
+  </div>
+
+  <nav>
+    <a href="#" onclick="showSection('beranda')">Beranda</a>
+    <a href="#" onclick="showSection('perusahaan')">Perusahaan</a>
+    <a href="#" onclick="showSection('karir')">Karir</a>
+    <a href="#" onclick="showSection('berita')">Berita</a>
+    <a href="#" onclick="showSection('bantuan')">Bantuan</a>
+  </nav>
+<a href="https://play.google.com/store/apps/details?id=com.gojek.app" target="_blank" class="btn download-btn">
+  Download Aplikasi
+</a>
+
+</header>
+
+<section id="beranda">
+  <div class="Abdullah">
+    <div>
+      <h1>Berkembang dan berkarya.</h1>
+      <p>Bersama, kamu kepo cari tahu aja di sini</p>
+    </div>
+    <img src="Abdullah.jpeg" alt="Abdullah" />
+  </div>
+
+  <div class="container">
+    <div class="gemini-card">
+      <h2>Cari Tahu di sini</h2>
+      <form id="geminiForm">
+        <input type="file" id="imageFile" accept="image/*" required />
+        <input type="text" id="prompt" placeholder="Tulis pertanyaanmu..." required />
+        <button class="btn" type="submit">Lihat jawabannya</button>
+      </form>
+      <div id="outputGemini">Jawaban akan muncul di sini...</div>
+    </div>
+  </div>
+</section>
+
+<section id="perusahaan" style="display:none;" class="container">
+  <div class="card" style="max-width: 800px; margin: auto; text-align: left;">
+    <!-- Logo & Nama Perusahaan disusun sejajar -->
+    <div style="display: flex; align-items: center; gap: 1em; margin-bottom: 1.5em;">
+      <img src="Logo.jpeg" alt="Logo Cari Tahu" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 5px rgba(0,0,0,0.2);">
+      <h2 style="margin: 0;">Cari Tahu</h2>
+    </div>
+
+    <p><strong>Cari Tahu</strong> adalah platform inovatif yang membantu pengguna menjelajahi informasi, karir, dan tren terkini dengan lebih mudah dan menyenangkan. Kami percaya bahwa rasa ingin tahu adalah kunci kemajuan.</p>
+
+    <h3 style="margin-top: 2em;">Visi Kami</h3>
+    <p>Menjadi sumber informasi terpercaya dan alat eksplorasi digital terbaik untuk generasi masa kini dan masa depan.</p>
+
+    <h3 style="margin-top: 2em;">Misi Kami</h3>
+    <ul style="padding-left: 1.2em; line-height: 1.6;">
+      <li>Menyediakan akses informasi yang cepat, akurat, dan relevan.</li>
+      <li>Mendukung perkembangan karir dan edukasi melalui teknologi.</li>
+      <li>Menghubungkan pengguna dengan peluang terbaik di berbagai bidang.</li>
+      <li>Menciptakan pengalaman digital yang ramah dan interaktif.</li>
+    </ul>
+
+    <h3 style="margin-top: 2em;">Kenapa Memilih Kami?</h3>
+    <ul style="padding-left: 1.2em; line-height: 1.6;">
+      <li><strong>User-friendly:</strong> Antarmuka bersih, mudah digunakan.</li>
+      <li><strong>Fitur canggih:</strong> Integrasi AI & pencarian berbasis gambar.</li>
+      <li><strong>Komunitas aktif:</strong> Dukungan tim dan kolaborasi yang terbuka.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="karir" class="container">
+  <div class="card">
+    <h2>Karir</h2>
+    <p>Berikut adalah lowongan kerja terbaru yang tersedia:</p>
+
+    <div class="job-grid">
+      <div class="job-card">
+        <strong>Software Engineer</strong>
+        <span>Jakarta - Full-time</span>
+        <span>💰 Gaji: Rp12.000.000 - Rp18.000.000</span>
+        <a href="#" class="btn">Lamar Sekarang</a>
+      </div>
+
+      <div class="job-card">
+        <strong>UI/UX Designer</strong>
+        <span>Remote - Full-time</span>
+        <span>💰 Gaji: Rp8.000.000 - Rp12.000.000</span>
+        <a href="#" class="btn">Lamar Sekarang</a>
+      </div>
+
+      <div class="job-card">
+        <strong>Marketing Internship</strong>
+        <span>Bandung - Magang</span>
+        <span>💰 Gaji: Rp2.000.000 - Rp3.500.000</span>
+        <a href="#" class="btn">Lamar Sekarang</a>
+      </div>
+
+      <div class="job-card">
+        <strong>Data Analyst</strong>
+        <span>Surabaya - Full-time</span>
+        <span>💰 Gaji: Rp10.000.000 - Rp15.000.000</span>
+        <a href="#" class="btn">Lamar Sekarang</a>
+      </div>
+
+      <div class="job-card">
+        <strong>Product Manager</strong>
+        <span>Remote - Full-time</span>
+        <span>💰 Gaji: Rp15.000.000 - Rp22.000.000</span>
+        <a href="#" class="btn">Lamar Sekarang</a>
+      </div>
+
+      <div class="job-card">
+        <strong>Graphic Designer</strong>
+        <span>Yogyakarta - Full-time</span>
+        <span>💰 Gaji: Rp6.000.000 - Rp9.000.000</span>
+        <a href="#" class="btn">Lamar Sekarang</a>
+      </div>
+
+      <div class="job-card">
+        <strong>DevOps Engineer</strong>
+        <span>Jakarta - Full-time</span>
+        <span>💰 Gaji: Rp13.000.000 - Rp20.000.000</span>
+        <a href="#" class="btn">Lamar Sekarang</a>
+      </div>
+
+      <div class="job-card">
+        <strong>Customer Support</strong>
+        <span>Bali - Full-time</span>
+        <span>💰 Gaji: Rp5.000.000 - Rp7.000.000</span>
+        <a href="#" class="btn">Lamar Sekarang</a>
+      </div>
+
+      <div class="job-card">
+        <strong>Business Analyst</strong>
+        <span>Semarang - Full-time</span>
+        <span>💰 Gaji: Rp9.000.000 - Rp14.000.000</span>
+        <a href="#" class="btn">Lamar Sekarang</a>
+      </div>
+
+      <div class="job-card">
+        <strong>Mobile Developer</strong>
+        <span>Remote - Full-time</span>
+        <span>💰 Gaji: Rp11.000.000 - Rp17.000.000</span>
+        <a href="#" class="btn">Lamar Sekarang</a>
+      </div>
+
+      <div class="job-card">
+        <strong>SEO Specialist</strong>
+        <span>Jakarta - Full-time</span>
+        <span>💰 Gaji: Rp6.000.000 - Rp10.000.000</span>
+        <a href="#" class="btn">Lamar Sekarang</a>
+      </div>
+
+      <div class="job-card">
+        <strong>Quality Assurance</strong>
+        <span>Bandung - Full-time</span>
+        <span>💰 Gaji: Rp8.000.000 - Rp12.000.000</span>
+        <a href="#" class="btn">Lamar Sekarang</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<input type="file" id="uploadLamaran" style="display: none;" accept=".pdf,.doc,.docx" />
+
+
+<style>
+  body {
+    background-color: #f5f7fb;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 2em;
+  }
+
+  .card {
+    background-color: #ffffff;
+    padding: 2em;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.06);
+  }
+
+  h2 {
+    margin-top: 0;
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: 1.8em;
+  }
+
+  p {
+    font-size: 1em;
+    margin-bottom: 1.5em;
+    color: #555;
+  }
+
+  .job-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5em;
+  }
+
+  .job-card {
+    background: #ffffff;
+    padding: 1.5em;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s ease;
+  }
+
+  .job-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .job-card strong {
+    font-size: 1.1em;
+    color: #2c3e50;
+  }
+
+  .job-card span {
+    display: block;
+    margin-top: 0.3em;
+    color: #666;
+    font-size: 0.95em;
+  }
+
+  .btn {
+    display: inline-block;
+    margin-top: 1em;
+    background-color: #28a745; /* Hijau */
+    color: white;
+    padding: 0.6em 1em;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9em;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+  }
+
+  .btn:hover {
+    background-color: #1e7e34;
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const fileInput = document.getElementById('uploadLamaran');
+      fileInput.click();
+
+      fileInput.onchange = function () {
+        if (fileInput.files.length > 0) {
+          alert("File lamaran berhasil dipilih: " + fileInput.files[0].name);
+          const exploreSection = document.getElementById('explore');
+          if (exploreSection) {
+            exploreSection.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      };
+    });
+  });
+</script>
+
+
+<section id="bantuan" style="display:none;" class="container">
+  <div class="card">
+    <h2>Bantuan</h2>
+    <p>Hubungi kami jika kamu memerlukan bantuan.</p>
+  </div>
+</section>
+
+<footer>
+  <p>Ikuti kami:
+    <a href="https://www.instagram.com/abdullah_real21?igsh=bnkwbGczN3NvcnBu" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/24/733/733558.png" alt="Instagram" style="vertical-align: middle; width: 20px; margin-right: 5px;"> Instagram
+    </a> |
+    <a href="https://linkedin.com/company/aksesmu" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/24/174/174857.png" alt="LinkedIn" style="vertical-align: middle; width: 20px; margin-right: 5px;"> LinkedIn
+    </a> |
+    <a href="https://www.facebook.com/abdullah.encle" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/24/733/733547.png" alt="Facebook" style="vertical-align: middle; width: 20px; margin-right: 5px;"> Facebook
+    </a> |
+    <a href="https://wa.me/6281292711746" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/24/733/733585.png" alt="WhatsApp" style="vertical-align: middle; width: 20px; margin-right: 5px;"> WhatsApp
+    </a>
+  </p>
+  <p>© 2025 Cari Tahu - All Rights Reserved</p>
+</footer>
+
+<script>
+  const API_KEY = "AIzaSyBW9_MSTRFNDKN5CJBwV5di2vaQ54z2AFY";
+
+  document.getElementById("geminiForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const file = document.getElementById("imageFile").files[0];
+    const prompt = document.getElementById("prompt").value;
+    const output = document.getElementById("outputGemini");
+    output.textContent = "Mengirim ke Gemini...";
+    output.style.display = "block";
+
+    const reader = new FileReader();
+    reader.onloadend = async () => {
+      const base64Image = reader.result.split(',')[1];
+
+      const body = {
+        contents: [{
+          role: "user",
+          parts: [{
+            inlineData: {
+              mimeType: file.type,
+              data: base64Image
+            }
+          }, {
+            text: prompt
+          }]
+        }]
+      };
+
+      try {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(body)
+        });
+
+        const data = await res.json();
+        if (data.candidates && data.candidates.length > 0) {
+          output.textContent = data.candidates[0].content.parts[0].text;
+        } else {
+          output.textContent = "Gagal mendapatkan respon dari Gemini.";
+        }
+      } catch (err) {
+        output.textContent = "Error: " + err.message;
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+
+  const sections = ["beranda", "perusahaan", "karir", "berita", "bantuan"];
+
+  function showSection(id) {
+    sections.forEach(section => {
+      document.getElementById(section).style.display = section === id ? "block" : "none";
+    });
+    if (id === "berita") loadBerita();
+  }
+
+  async function loadBerita() {
+    const output = document.getElementById("outputBerita");
+    output.innerHTML = "Memuat berita...";
+
+    try {
+      const res = await fetch("https://api.rss2json.com/v1/api.json?rss_url=https://rss.detik.com/index.php/detikcom");
+      const data = await res.json();
+      if (data.items && data.items.length > 0) {
+        output.innerHTML = "<ul>";
+        data.items.slice(0, 5).forEach(item => {
+          output.innerHTML += `
+            <li style="margin-bottom: 10px;">
+              <a href="${item.link}" target="_blank"><b>${item.title}</b></a><br>
+              <small>${new Date(item.pubDate).toLocaleString()}</small>
+            </li>
+          `;
+        });
+        output.innerHTML += "</ul>";
+      } else {
+        output.innerHTML = "Tidak ada berita ditemukan.";
+      }
+    } catch (error) {
+      output.innerHTML = "Gagal mengambil berita: " + error.message;
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    showSection("beranda");
+  });
+</script>
+
+</body>
+</html>

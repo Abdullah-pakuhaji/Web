@@ -1,20 +1,39 @@
-name: CI - Build and Push to Docker Hub
+name: CI/CD - DockerHub + Deploy VPS
 
 on:
+  push:
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+    - name: Checkout Repo
+      uses: actions/checkout@v3
 
-      - name: Login to Docker Hub
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+    - name: Login to DockerHub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and Push Docker Image
-        run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/web:${{ github.sha }} .
-          docker push ${{ secrets.DOCKER_USERNAME }}/web:${{ github.sha }}
+    - name: Build & Push Docker Image
+      run: |
+        docker build -t abdullah2107/caritahu:latest .
+        docker push abdullah2107/caritahu:latest
+
+    # Kalau belum punya VPS, bagian deploy bisa dinonaktifkan dulu:
+    # - name: Deploy to VPS
+    #   uses: appleboy/ssh-action@v0.1.10
+    #   with:
+    #     host: ${{ secrets.VPS_HOST }}
+    #     username: ${{ secrets.VPS_USER }}
+    #     key: ${{ secrets.VPS_KEY }}
+    #     script: |
+    #       docker stop caritahu || true
+    #       docker rm caritahu || true
+    #       docker pull abdullah2107/caritahu:latest
+    #       docker run -d --name caritahu -p 80:80 abdullah2107/caritahu:latest

@@ -515,7 +515,7 @@
       };
 
       try {
-        const res = await fetch(https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}, {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -555,12 +555,12 @@
       if (data.items && data.items.length > 0) {
         output.innerHTML = "<ul>";
         data.items.slice(0, 5).forEach(item => {
-          output.innerHTML += 
+          output.innerHTML += `
             <li style="margin-bottom: 10px;">
               <a href="${item.link}" target="_blank"><b>${item.title}</b></a><br>
               <small>${new Date(item.pubDate).toLocaleString()}</small>
             </li>
-          ;
+          `;
         });
         output.innerHTML += "</ul>";
       } else {

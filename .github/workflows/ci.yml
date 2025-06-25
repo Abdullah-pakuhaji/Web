@@ -3,37 +3,29 @@ name: CI/CD - DockerHub + Deploy VPS
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repo
+    - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Login to DockerHub
-      uses: docker/login-action@v3
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-
-    - name: Build & Push Docker Image
+    - name: Setup SSH Key
       run: |
-        docker build -t abdullah2107/caritahu:latest .
-        docker push abdullah2107/caritahu:latest
+        echo "${{ secrets.VPS_PRIVATE_KEY }}" > gha_key
+        chmod 600 gha_key
 
-    # Kalau belum punya VPS, bagian deploy bisa dinonaktifkan dulu:
-    # - name: Deploy to VPS
-    #   uses: appleboy/ssh-action@v0.1.10
-    #   with:
-    #     host: ${{ secrets.VPS_HOST }}
-    #     username: ${{ secrets.VPS_USER }}
-    #     key: ${{ secrets.VPS_KEY }}
-    #     script: |
-    #       docker stop caritahu || true
-    #       docker rm caritahu || true
-    #       docker pull abdullah2107/caritahu:latest
-    #       docker run -d --name caritahu -p 80:80 abdullah2107/caritahu:latest
+    - name: Copy project ke VPS
+      run: |
+        scp -i gha_key -o StrictHostKeyChecking=no -r . ubuntu@35.175.61.71:/home/ubuntu/app
+
+    - name: Remote Build + Deploy Docker di VPS
+      run: |
+        ssh -i gha_key -o StrictHostKeyChecking=no ubuntu@35.175.61.71 << 'EOF'
+          cd /home/ubuntu/app
+          sudo docker rm -f caritahu-container || true
+          sudo docker build -t caritahu-app .
+          sudo docker run -d -p 80:80 --name caritahu-container caritahu-app
+        EOF

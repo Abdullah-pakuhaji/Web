@@ -20,26 +20,19 @@ jobs:
             set -e
 
             echo "🚀 Masuk ke direktori project..."
+            mkdir -p ~/app
             cd ~/app
 
             echo "📦 Menarik Docker image terbaru dari Docker Hub..."
             docker pull abdullah2107/caritahu:latest
 
             echo "📝 Membuat file docker-compose.yml..."
-            cat <<EOF > docker-compose.yml
-            version: '3.8'
-            services:
-              web:
-                image: abdullah2107/caritahu:latest
-                container_name: caritahu
-                ports:
-                  - "80:80"
-            EOF
-
-            echo "🧹 Menghentikan container lama jika ada..."
-            docker compose down || true
-
-            echo "🚀 Menjalankan container baru..."
-            docker compose up -d
-
-            echo "✅ Deploy selesai via docker-compose."
+            cat > docker-compose.yml <<EOF
+version: '3.8'
+services:
+  web:
+    image: abdullah2107/caritahu:latest
+    container_name: caritahu
+    ports:
+      - "80:80"
+EOF

@@ -1,31 +1,26 @@
-name: CI/CD - DockerHub + Deploy VPS
+- name: Deploy ke VPS
+  uses: appleboy/ssh-action@master
+  with:
+    host: ${{ secrets.VPS_HOST }}
+    username: ${{ secrets.VPS_USER }}
+    key: ${{ secrets.GHA_KEY }}
+    script: |
+      set -e  # Stop on first error
 
-on:
-  push:
-    branches: [ main ]
+      echo "Masuk ke direktori app..."
+      cd ~/app
 
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
+      echo "Menarik perubahan terbaru dari branch main..."
+      git pull origin main
 
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      echo "Menghapus container dan image lama (jika ada)..."
+      sudo docker rm -f caritahu-container || true
+      sudo docker rmi -f caritahu-app || true
 
-    - name: Setup SSH Key
-      run: |
-        echo "${{ secrets.VPS_PRIVATE_KEY }}" > gha_key
-        chmod 600 gha_key
+      echo "Build Docker image terbaru..."
+      sudo docker build -t caritahu-app .
 
-    - name: Copy project ke VPS
-      run: |
-        scp -i gha_key -o StrictHostKeyChecking=no -r . ubuntu@35.175.61.71:/home/ubuntu/app
+      echo "Menjalankan container baru..."
+      sudo docker run -d -p 80:80 --name caritahu-container caritahu-app
 
-    - name: Remote Build + Deploy Docker di VPS
-      run: |
-        ssh -i gha_key -o StrictHostKeyChecking=no ubuntu@35.175.61.71 << 'EOF'
-          cd /home/ubuntu/app
-          sudo docker rm -f caritahu-container || true
-          sudo docker build -t caritahu-app .
-          sudo docker run -d -p 80:80 --name caritahu-container caritahu-app
-        EOF
+      echo "✅ Deploy selesai."

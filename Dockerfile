@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Gunakan image nginx ringan sebagai web server
 FROM nginx:alpine
 
@@ -13,9 +12,3 @@ EXPOSE 80
 
 # Jalankan nginx di foreground (agar container tetap berjalan)
 CMD ["nginx", "-g", "daemon off;"]
-=======
-FROM nginx:alpine
-RUN rm -rf /usr/share/nginx/html/*
-COPY . /usr/share/nginx/html
-EXPOSE 80
->>>>>>> c99c6a3 (Upload awal proyek CariTahu)

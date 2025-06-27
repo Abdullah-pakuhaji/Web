@@ -27,4 +27,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: abdullah123/caritahu:latest
+          tags: abdullah2107/caritahu:latest
